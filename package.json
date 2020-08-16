@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "logger": "0.0.1",
-    "mongoose": "^5.9.26"
+    "mongoose": "^5.9.26",
+    "npm": "^6.14.7"
   }
 }

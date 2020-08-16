@@ -1,0 +1,66 @@
+
+
+info [Sat Aug 08 2020 14:42:29 GMT-0700 (Mountain Standard Time)]  Root GET recieved
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+info [Thu Aug 13 2020 15:37:19 GMT-0700 (Mountain Standard Time)]  > GET request from root path
+info [Thu Aug 13 2020 15:37:19 GMT-0700 (Mountain Standard Time)]  /
+info [Thu Aug 13 2020 15:38:03 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/* path
+info [Thu Aug 13 2020 15:38:03 GMT-0700 (Mountain Standard Time)]  /squish/AAAAA
+info [Thu Aug 13 2020 15:38:47 GMT-0700 (Mountain Standard Time)]  > GET request from /user/* path
+info [Thu Aug 13 2020 15:38:47 GMT-0700 (Mountain Standard Time)]  /user/BlueDragon
+
+
+
+
+
+
+
+
+
+
+
+
+info [Sat Aug 15 2020 18:17:09 GMT-0700 (Mountain Standard Time)]  > GET request from root path
+info [Sat Aug 15 2020 18:17:09 GMT-0700 (Mountain Standard Time)]  /
+
+
+info [Sat Aug 15 2020 18:36:46 GMT-0700 (Mountain Standard Time)]  !! db closed
+
+
+
+info [Sat Aug 15 2020 22:31:50 GMT-0700 (Mountain Standard Time)]  > GET request from /user/* path
+info [Sat Aug 15 2020 22:31:50 GMT-0700 (Mountain Standard Time)]  /user/BlueDragon
+
+
+
+info [Sat Aug 15 2020 22:43:49 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/* path
+info [Sat Aug 15 2020 22:43:49 GMT-0700 (Mountain Standard Time)]  /squish
+info [Sat Aug 15 2020 22:44:05 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/* path
+info [Sat Aug 15 2020 22:44:05 GMT-0700 (Mountain Standard Time)]  /squish/AAAAA
+
+info [Sat Aug 15 2020 22:44:28 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/* path
+info [Sat Aug 15 2020 22:44:28 GMT-0700 (Mountain Standard Time)]  /squish/AAAAA
+
+
+
+info [Sat Aug 15 2020 22:53:05 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/
+info [Sat Aug 15 2020 22:53:09 GMT-0700 (Mountain Standard Time)]  > GET request from /squish
+info [Sat Aug 15 2020 22:53:13 GMT-0700 (Mountain Standard Time)]  > GET request from /user
+
+
+
