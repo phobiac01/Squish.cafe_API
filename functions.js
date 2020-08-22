@@ -28,4 +28,8 @@ function logger(data, level) {
         console.log(data);
 }
 
-module.exports = { logger };
+async function generateNewShort() {
+    return "AAAAA";
+}
+
+module.exports = { logger, generateNewShort };

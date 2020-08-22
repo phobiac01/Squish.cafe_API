@@ -1,4 +1,5 @@
 const logger = require('./functions.js').logger;
+const generateNewShort = require('./functions.js').generateNewShort;
 //const schemas = require('./schemas.js');
 //var Squish = schemas.Squish;
 //var User = schemas.User;
@@ -12,11 +13,13 @@ db.on('close', () => {console.log("> Database has been closed")});
 
 // const sslChecker = require('ssl-checker');
 const express = require('express');
+var cors = require('cors');
 const app = express();
 const port = 4040;
 
-app.use(express.json("type", "application/json"));
 
+app.use(express.json("type", "application/json"));
+app.use(cors());
 
 
 app.get('/', (req, res) => {
@@ -33,6 +36,14 @@ app.get('/apiStop', (req, res) => {
     logger("!! API has been stopped via REST path");
     db.close();
     process.exit(0);
+});
+
+app.get('/cleanDb', (req, res) => {
+    Squish.remove({}, () => {});
+    User.remove({}, () => {});
+
+    logger("!! Database cleared via REST path");
+    res.send("success");
 });
 
 // API GET HANDLING
@@ -52,18 +63,23 @@ app.get('/user/', (req, res) => {
 
 /*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
 
-
-// > requires api key and squish SHORT via url path
+// > requires api key and squish SHORT via url path (unless from same origin)
 // < returns squish object and success information
-app.get('/squish/*', (req, res) => {
-    res.send("This route will try to find the squish object located at " + req.path + "</br>Not Yet Implimented!");
+app.get('/squish/*', async (req, res) => {
+    var targetSquish = req.path.substring(8, req.path.length +1);
+    var squishResult = await Squish.findOne({short : targetSquish});
+
+    res.json(squishResult);
     logger("> GET request from " + req.path);
 });
 
 // > requires api key and user displayName via url path
 // < returns user object and success information
-app.get('/user/*', (req, res) => {
-    res.send("This route will try to find the user object located at " + req.path + "</br>Not Yet Implimented!");
+app.get('/user/*', async (req, res) => {
+    var targetUser = req.path.substring(6, req.path.length +1);
+    var userResult = await User.findOne({displayName : targetUser});
+    
+    res.json(userResult);
     logger("> GET request from " + req.path);
 });
 
@@ -72,31 +88,48 @@ app.get('/user/*', (req, res) => {
 /*========================================================================================*/
 
 app.post('/setUser', (req, res) => {
-    console.log("reqBody = " + req.body.displayName); // TODO: Fix body parsing and get that working!!
-    var newUser = new User({displayName : req.body.displayName});
+    var incomingUser = req.body;
+    if(!incomingUser.displayName) {
+        res.status(400).json({memo: "No displayName provided"});
 
-    newUser.save((err) => {
-        if (err) return handleError(err);
-        console.log(newUser.displayName + " saved to DB!");
-    });
+    } else {
+        var newUser = new User({
+            displayName : incomingUser.displayName,
+            avatarUrl: "https://f0.pngfuel.com/png/340/956/profile-user-icon-png-clip-art-thumbnail.png",
+            created : Date(),
+        });
 
-    res.send(newUser);
+        newUser.save((err) => {
+            if (err) return handleError(err);
+            console.log(newUser.displayName + " saved to DB!");
+        });
+
+        res.send(newUser);
+    }
 });
 
-app.post('/setSquish', (req, res) => {
-    var newSquish = new Squish({
-        short: req.body.short, 
-        long: req.body.long, 
-        type: "link", 
-        created: new Date()
-    });
 
-    newSquish.save((err) => {
-        if (err) return handleError(err);
-        console.log(newSquish.displayName + " saved to DB!");
-    });
+app.post('/setSquish', async (req, res) => {
+    var incomingSquish = req.body;
 
-    res.send(newSquish);
+    if (!incomingSquish.url) {
+        res.status(400).json({memo: "No url provided"});
+
+    } else {
+        var newSquish = new Squish({
+            short: (incomingSquish.short) ? incomingSquish.short : await generateNewShort(),
+            long: incomingSquish.url, 
+            type: "link", 
+            created: new Date(),
+        });
+
+        newSquish.save((err) => {
+            if (err) console.log(err);
+            console.log(newSquish.short + " saved to DB!");
+        });
+
+        res.send(newSquish);
+    }
 });
 
 /*=========================================()===============================================*/
@@ -123,7 +156,7 @@ process.on('exit', function (){
 
 /*
 Extra Notes:
-> For user auth and editing use cookies and keys
+> For user auth and editing use cookies and keys and cors
     - each user has their own ID. When logging in a new auth key is added to their browser and user account
     - When doing an authed action, user ID is sent as well as auth key, checked against db, and enacted
 */
@@ -157,7 +190,7 @@ var userSchema = new Schema({
     userID: String,
     created: Date,
     lastEdited: Date,
-    avatar: String, // Link to default resource in mongodb
+    avatarUrl: String, // Link to default resource in mongodb
     userLevel: 0,
     api: {hasKey: false, key: String},
     links: {total: 0, shorts: []},
