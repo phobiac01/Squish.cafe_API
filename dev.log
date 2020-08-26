@@ -1,1 +1,15 @@
 
+
+
+
+info [Sun Aug 23 2020 22:31:10 GMT-0700 (Mountain Standard Time)]  > GET request from /user/b
+info [Sun Aug 23 2020 22:31:15 GMT-0700 (Mountain Standard Time)]  > GET request from /user/BlueDragon
+info [Sun Aug 23 2020 22:31:32 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAA
+info [Sun Aug 23 2020 22:31:34 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAAA
+info [Sun Aug 23 2020 22:31:48 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAA
+info [Sun Aug 23 2020 22:31:51 GMT-0700 (Mountain Standard Time)]  !! Database cleared via REST path
+info [Sun Aug 23 2020 22:31:54 GMT-0700 (Mountain Standard Time)]  > GET request from /user/BlueDragon
+info [Sun Aug 23 2020 22:31:56 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAA
+info [Sun Aug 23 2020 22:31:58 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAA
+info [Sun Aug 23 2020 22:32:00 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAAA
+info [Sun Aug 23 2020 22:32:01 GMT-0700 (Mountain Standard Time)]  > GET request from /squish/AAAAA
